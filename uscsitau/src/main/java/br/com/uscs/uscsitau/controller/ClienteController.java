@@ -3,6 +3,7 @@ package br.com.uscs.uscsitau.controller;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import br.com.uscs.uscsitau.utils.CpfCnpj;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,10 +40,21 @@ public class ClienteController {
     public String salvaClientes(@RequestBody Cliente cadastro) {
 
         try{
+
+            CpfCnpj cpfCnpjCadastro = new CpfCnpj(cadastro.getCpf_cnpj(),
+                    cadastro.getTipo_de_cliente());
+
+            if (!cpfCnpjCadastro.isValid()) {
+                throw new IllegalStateException();
+            }
+
             List<Cliente> clientes = (List<Cliente>) clienteRepository.findAll();
-            AtomicBoolean exists = new AtomicBoolean(false);
+            AtomicBoolean exists = new AtomicBoolean();
             clientes.forEach(item -> {
-                if(item.getCpf_cnpj().equals(cadastro.getCpf_cnpj())) {
+                CpfCnpj cpfCnpjCadastrado = new CpfCnpj(item.getCpf_cnpj(),
+                        item.getTipo_de_cliente());
+
+                if(cpfCnpjCadastrado.getNumber().equals(cpfCnpjCadastro.getNumber())) {
                     exists.set(true);
                     throw new IllegalArgumentException();
                 }
@@ -53,11 +65,13 @@ public class ClienteController {
             }
 
         } catch (IllegalArgumentException ex) {
-            System.out.println("Cliente com cpf/cnpj " + cadastro.getCpf_cnpj() + " já cadastrado");
-            return ("Cliente com cpf/cnpj " + cadastro.getCpf_cnpj() + " já cadastrado");
+            return ("Cliente com cpf/cnpj " + cadastro.getCpf_cnpj() + " ja cadastrado");
         }
 
-        System.out.println("Cliente "+ cadastro.getNome() +" cadastrado com sucesso"); ////// Apenas parece no terminal
+        catch (IllegalStateException ex) {
+            return ("Cpf/Cnpj " + cadastro.getCpf_cnpj() + " invalido");
+        }
+
         return ("Cliente "+ cadastro.getNome() +" cadastrado com sucesso");
     }
     
