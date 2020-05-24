@@ -1,7 +1,7 @@
 package br.com.uscs.uscsitau.controller;
 
 import java.util.List;
-import java.util.Random;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -36,19 +36,29 @@ public class ClienteController {
 
 
     @PostMapping("/salvaClientes")
-    public Cliente salvaClientes(@RequestBody Cliente cadastro) {
+    public String salvaClientes(@RequestBody Cliente cadastro) {
 
-        List<Cliente> clientes = (List<Cliente>) clienteRepository.findAll();
+        try{
+            List<Cliente> clientes = (List<Cliente>) clienteRepository.findAll();
+            AtomicBoolean exists = new AtomicBoolean(false);
+            clientes.forEach(item -> {
+                if(item.getCpf_cnpj().equals(cadastro.getCpf_cnpj())) {
+                    exists.set(true);
+                    throw new IllegalArgumentException();
+                }
+            });
 
-        clientes.forEach(item -> {
-            if(item.getCpf_cnpj().equals(cadastro.getCpf_cnpj())) {
-                System.out.println("Cliente com cpf/cnpj " + cadastro.getCpf_cnpj() + " já cadastrado");
+            if (!exists.get()) {
+                clienteRepository.save(cadastro);
             }
-        });
 
+        } catch (IllegalArgumentException ex) {
+            System.out.println("Cliente com cpf/cnpj " + cadastro.getCpf_cnpj() + " já cadastrado");
+            return ("Cliente com cpf/cnpj " + cadastro.getCpf_cnpj() + " já cadastrado");
+        }
 
-    	System.out.println("Cliente "+ cadastro.getNome() +" cadastrado com sucesso"); ////// Apenas parece no terminal
-        return clienteRepository.save(cadastro);
+        System.out.println("Cliente "+ cadastro.getNome() +" cadastrado com sucesso"); ////// Apenas parece no terminal
+        return ("Cliente "+ cadastro.getNome() +" cadastrado com sucesso");
     }
     
     @DeleteMapping("/deletaClientes") //Se colocado apenas o CPF o clinete é deletado! Forma de se colocar no Postman  {"cpf_cnpj": "445.000.000-15"}
