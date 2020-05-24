@@ -1,0 +1,140 @@
+# USCS/Itaú Project
+
+Used technologies in the project:
+
+- SpringBoot
+  - Web
+  - DevTools
+  - Lombok
+  - SpringData Cassandra
+  - Spring Kafka
+
+- Database
+  - Cassandra
+ 
+- Docker
+  - Cassandra
+  - Kafka
+  - Zookeeper
+
+## Steps to install
+
+**1. Clone the repository**
+
+```bash
+https://github.com/Lucas19932020/Itau_Repository
+```
+
+**2. Install Docker**
+
+Site to download [Docker](https://docs.docker.com/get-docker/).
+
+**3. Install and configure *Cassandra***
+
+  **3.1. Pull the repository from *Cassandra***
+
+  `docker pull datastax/dse-server:5.1.18`
+
+  **3.2. Para criar o container da *Cassandra*, execute o comando:**
+  
+  `docker run -e DS_LICENSE=accept --memory 4g --name cassandra -p 9042:9042 -d datastax/dse-server:5.1.18`
+
+  **3.3. To copy the file *cassandra.yaml* inside the container, execute the command:**
+ 
+  `docker cp <FILE_CASSANDRA> cassandra:/opt/dse/resources/cassandra/conf/`
+
+  Obs.: Replace the ***<FILE_CASSANDRA>*** through the file directory *cassandra.yaml*, which is located in the project repository `"_/uscsitau/src/main/resources/config/cassandra.yaml_"`.
+
+  **3.4. Stop and Start the container *Cassandra***
+  
+  `docker stop cassandra`
+
+  `docker start cassandra`
+
+  **3.5. To configure and create the tables, run the command:**
+  
+  `docker exec -it cassandra bash`
+
+  **3.5.1. To log in *Cassandra*, run the command:**
+  
+  `cqlsh -u cassandra -p cassandra`
+
+  **3.5.2. To create an user**
+
+  `CREATE ROLE root with SUPERUSER = true AND LOGIN = true and PASSWORD = 'root';`
+
+  **3.5.3. Create the Keyspace**
+
+  `CREATE KEYSPACE dbo WITH REPLICATION = {'class': 'SimpleStrategy','replication_factor' : 1};`
+
+  `USE dbo;`
+
+  **3.5.1. Create the tables**
+
+```bash
+  CREATE TABLE cliente (
+      nome VARCHAR,
+      cpf_cnpj VARCHAR PRIMARY KEY,
+      tipo_de_cliente VARCHAR,
+      endereco VARCHAR,
+      renda DOUBLE,
+      razao_social VARCHAR,
+      incr_estadual VARCHAR,
+      num_conta VARCHAR
+  );
+```
+```bash
+  CREATE TABLE conta (
+      num_conta VARCHAR PRIMARY KEY,
+      agencia VARCHAR,
+      dac INT,
+      saldo DOUBLE
+  );
+```
+```bash
+  CREATE TABLE historico (
+      cpf_cnpj VARCHAR PRIMARY KEY,
+      tipo_de_transacao VARCHAR,
+      data DATE,
+      status INT
+  );
+```
+
+**4. Install and configure the *Kafka* and *Zookeeper***
+
+  **4.1. Clone the repository that contains the *Kafka* and the *Zookeeper***
+
+  `git clone https://github.com/confluentinc/cp-docker-images`
+
+  **4.2. After cloned, navigate to the folder cp-docker-images/examples/kafka-single-node and run the command:**
+  
+  `docker-compose up -d`
+
+  **4.3. To list the Kafka and Zookeeper services, run the command:**
+  
+  `docker-compose ps`
+
+  **4.4. To create a Topic in Kafka, execute the command:**
+
+    ```bash
+    docker-compose exec kafka  \
+    kafka-topics --create --topic bank-listener --partitions 3 --replication-factor 1 --if-not-exists --zookeeper zookeeper:2181
+    ```
+    
+  **4.5. To validate that the Topic was created, run the command:**
+
+  ```bash
+  docker-compose exec kafka  \
+      kafka-topics --describe --topic bank-listener  --zookeeper zookeeper:2181
+  ```
+
+**5. Import the project into the IDE**
+
+Execute the class `StartApplication`.
+
+## Routing
+
+```bash
+  POST    http://localhost:8080/cadastrados/cliente
+  GET     http://localhost:8080/cadastrados/cliente
+```
