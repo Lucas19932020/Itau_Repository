@@ -1,4 +1,4 @@
-package br.com.uscs.uscsitau.models;
+package br.com.uscs.uscsitau.model;
 
 import java.io.Serializable;
 
@@ -13,7 +13,7 @@ import lombok.Data;
 @Data
 @Builder
 @Table(value = "cliente")
-public class clientes implements Serializable {
+public class Cliente implements Serializable {
 
     /**
 	 * 
