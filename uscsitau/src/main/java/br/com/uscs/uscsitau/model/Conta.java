@@ -10,13 +10,9 @@ import org.springframework.data.cassandra.core.mapping.Table;
 import lombok.Builder;
 import lombok.Data;
 
-@Data
-@Builder
 @Table(value = "conta")
 public class Conta implements Serializable{
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 
     @PrimaryKeyColumn(
@@ -31,6 +27,7 @@ public class Conta implements Serializable{
     int dac;
 	@Column(value = "saldo")
     double saldo;
+<<<<<<< HEAD
 	
 	public String getNum_conta() {
 	        return num_conta;
@@ -64,4 +61,38 @@ public class Conta implements Serializable{
 	    }
 	
 	
+=======
+
+	public String getNum_conta() {
+		return num_conta;
+	}
+
+	public void setNum_conta(String num_conta) {
+		this.num_conta = num_conta;
+	}
+
+	public String getAgencia() {
+		return agencia;
+	}
+
+	public void setAgencia(String agencia) {
+		this.agencia = agencia;
+	}
+
+	public int getDac() {
+		return dac;
+	}
+
+	public void setDac(int dac) {
+		this.dac = dac;
+	}
+
+	public double getSaldo() {
+		return saldo;
+	}
+
+	public void setSaldo(double saldo) {
+		this.saldo = saldo;
+	}
+>>>>>>> refs/remotes/origin/master
 }
