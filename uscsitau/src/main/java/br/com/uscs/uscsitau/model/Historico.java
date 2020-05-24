@@ -33,4 +33,13 @@ public class Historico implements Serializable{
     @Column(value = "data")
     LocalDateTime data;
 
+    public String getCpf_cnpj() {
+        return cpf_cnpj;
+    }
+
+    public void setCpf_cnpj(String cpf_cnpj) {
+        this.cpf_cnpj = cpf_cnpj;
+    }
+    
+
 }
