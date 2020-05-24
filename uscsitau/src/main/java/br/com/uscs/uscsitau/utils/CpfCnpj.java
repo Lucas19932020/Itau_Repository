@@ -91,6 +91,10 @@ public class CpfCnpj implements Serializable {
         return valor;
     }
 
+    public boolean isPJ() {
+        return isPJ;
+    }
+
     @Override
     public String toString() {
         return getCpfCnpj();

@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import br.com.uscs.uscsitau.model.Historico;
+import br.com.uscs.uscsitau.model.HistoricoVO;
 import br.com.uscs.uscsitau.repository.HistoricoRepository;
 
 @RequestMapping(value="/historico")
@@ -19,8 +19,8 @@ public class HistoricoController {
 
 	
 	@GetMapping("/listaHistorico")
-	public List<Historico> listaHistoricos(){
-		return (List<Historico>) historicoRepository.findAll(); 
+	public List<HistoricoVO> listaHistoricos(){
+		return (List<HistoricoVO>) historicoRepository.findAll();
 	}
 	
 

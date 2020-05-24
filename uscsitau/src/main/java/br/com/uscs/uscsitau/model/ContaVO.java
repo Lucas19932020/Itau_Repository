@@ -11,7 +11,7 @@ import lombok.Builder;
 import lombok.Data;
 
 @Table(value = "conta")
-public class Conta implements Serializable{
+public class ContaVO implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 

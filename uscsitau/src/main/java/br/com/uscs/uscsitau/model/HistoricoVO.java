@@ -14,7 +14,7 @@ import lombok.Data;
 @Data
 @Builder
 @Table(value = "historico")
-public class Historico implements Serializable{
+public class HistoricoVO implements Serializable{
  
 	/**
 	 * 

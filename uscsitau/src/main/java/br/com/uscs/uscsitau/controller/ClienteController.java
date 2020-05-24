@@ -4,9 +4,10 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import br.com.uscs.uscsitau.controller.dto.ClienteDTO;
 import br.com.uscs.uscsitau.errorhandling.AppException;
 import br.com.uscs.uscsitau.errorhandling.ErrorCode;
-import br.com.uscs.uscsitau.model.Conta;
+import br.com.uscs.uscsitau.model.ContaVO;
 import br.com.uscs.uscsitau.repository.ContaRepository;
 import br.com.uscs.uscsitau.utils.CpfCnpj;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.uscs.uscsitau.model.Cliente;
+import br.com.uscs.uscsitau.model.ClienteVO;
 import br.com.uscs.uscsitau.repository.ClienteRepository;
 
 
@@ -35,8 +36,8 @@ public class ClienteController {
     ContaRepository contaRepository;
 
     @GetMapping("/lista")
-    public List<Cliente> listaClientes(){
-        return (List<Cliente>) clienteRepository.findAll();
+    public List<ClienteVO> listaClientes(){
+        return (List<ClienteVO>) clienteRepository.findAll();
     }
     
   /* @GetMapping("/clinete/{id}")
@@ -45,19 +46,20 @@ public class ClienteController {
     }*/ //Pesquisar sobre pesquisa de apenas um cliente
 
 
-    @PostMapping("/salva")
-    public ResponseEntity salvaClientes(@RequestBody Cliente cadastro) {
+    @PostMapping("/salvar")
+    public ResponseEntity salvaClientes(@RequestBody ClienteDTO clienteDTO) {
 
 
-        CpfCnpj cpfCnpjCadastro = new CpfCnpj(cadastro.getCpf_cnpj());
+        CpfCnpj cpfCnpjCadastro = new CpfCnpj(clienteDTO.getCpf_cnpj());
+        ClienteVO clienteVO = new ClienteVO();
 
         if (!cpfCnpjCadastro.isValid()) {
             return ResponseEntity.badRequest().body(new AppException(ErrorCode.CPF_CNPJ_INVALID));
         }
 
-        List<Cliente> clientes = (List<Cliente>) clienteRepository.findAll();
+        List<ClienteVO> clienteVOS = (List<ClienteVO>) clienteRepository.findAll();
         AtomicBoolean exists = new AtomicBoolean();
-        clientes.forEach(item -> {
+        clienteVOS.forEach(item -> {
             CpfCnpj cpfCnpjCadastrado = new CpfCnpj(item.getCpf_cnpj(),
                     item.getTipo_de_cliente());
 
@@ -68,24 +70,33 @@ public class ClienteController {
 
         if (!exists.get()) {
 
-			Conta conta = new Conta();
-			conta.setAgencia(String.valueOf(new Random().nextInt(9999)));
-			conta.setDac(1);
-			conta.setSaldo(0);
-			conta.setNum_conta(String.valueOf(new Random().nextInt(999999999)));
-			contaRepository.save(conta);
+			ContaVO contaVO = new ContaVO();
+			contaVO.setAgencia(String.valueOf(new Random().nextInt(9999)));
+			contaVO.setDac(1);
+			contaVO.setSaldo(0);
+			contaVO.setNum_conta(String.valueOf(new Random().nextInt(999999999)));
+			contaRepository.save(contaVO);
 
-			cadastro.setNum_conta(conta.getNum_conta());
-            clienteRepository.save(cadastro);
+            clienteVO.setNome(clienteDTO.getNome());
+            clienteVO.setCpf_cnpj(new CpfCnpj(clienteDTO.getCpf_cnpj()).getCpfCnpj());
+            clienteVO.setTipo_de_cliente(new CpfCnpj(clienteDTO.getCpf_cnpj()).isPJ() ? "PJ" : "PF");
+            clienteVO.setEndereco(clienteDTO.getEndereco());
+            clienteVO.setRenda(clienteDTO.getRenda());
+            clienteVO.setRazao_social(clienteDTO.getRazao_social());
+            clienteVO.setIncr_estadual(clienteDTO.getIncr_estadual());
+            clienteVO.setNum_conta(contaVO.getNum_conta());
+
+            clienteRepository.save(clienteVO);
+
         } else {
             return ResponseEntity.badRequest().body(new AppException(ErrorCode.CPF_CNPJ_ALREADY_EXISTS));
         }
 
-        return ResponseEntity.ok().body(cadastro);
+        return ResponseEntity.ok().body(clienteVO);
     }
     
-    @DeleteMapping("/deleta") //Se colocado apenas o CPF o clinete é deletado! Forma de se colocar no Postman  {"cpf_cnpj": "445.000.000-15"}
-    public ResponseEntity deletaClientes(@RequestBody Cliente cadastro) {
+    @DeleteMapping("/deletar") //Se colocado apenas o CPF o clinete é deletado! Forma de se colocar no Postman  {"cpf_cnpj": "445.000.000-15"}
+    public ResponseEntity deletaClientes(@RequestBody ClienteVO cadastro) {
 
     	clienteRepository.delete(cadastro);
 
@@ -93,18 +104,19 @@ public class ClienteController {
 
     }
     
-    @PutMapping("/atualiza") //Utilizado para atualização de cadastros
-    public ResponseEntity atualizaClientes(@RequestBody Cliente cadastro) {
+    @PutMapping("/atualizar") //Utilizado para atualização de cadastros
+    public ResponseEntity atualizaClientes(@RequestBody ClienteDTO clienteDTO) {
 
-            CpfCnpj cpfCnpjCadastro = new CpfCnpj(cadastro.getCpf_cnpj());
+            CpfCnpj cpfCnpjCadastro = new CpfCnpj(clienteDTO.getCpf_cnpj());
+            ClienteVO clienteVO = new ClienteVO();
 
             if (!cpfCnpjCadastro.isValid()) {
                 return ResponseEntity.badRequest().body(new AppException(ErrorCode.CPF_CNPJ_INVALID));
             }
 
-            List<Cliente> clientes = (List<Cliente>) clienteRepository.findAll();
+            List<ClienteVO> clienteVOS = (List<ClienteVO>) clienteRepository.findAll();
             AtomicBoolean exists = new AtomicBoolean();
-            clientes.forEach(item -> {
+            clienteVOS.forEach(item -> {
                 CpfCnpj cpfCnpjCadastrado = new CpfCnpj(item.getCpf_cnpj(),
                         item.getTipo_de_cliente());
 
@@ -116,11 +128,20 @@ public class ClienteController {
             if (!exists.get()) {
                 return ResponseEntity.badRequest().body(new AppException(ErrorCode.CPF_CNPJ_NOT_FOUND));
             } else {
-                clienteRepository.save(cadastro);
+
+                clienteVO.setNome(clienteDTO.getNome());
+                clienteVO.setCpf_cnpj(new CpfCnpj(clienteDTO.getCpf_cnpj()).getCpfCnpj());
+                clienteVO.setTipo_de_cliente(new CpfCnpj(clienteDTO.getCpf_cnpj()).isPJ() ? "PJ" : "PF");
+                clienteVO.setEndereco(clienteDTO.getEndereco());
+                clienteVO.setRenda(clienteDTO.getRenda());
+                clienteVO.setRazao_social(clienteDTO.getRazao_social());
+                clienteVO.setIncr_estadual(clienteDTO.getIncr_estadual());
+                clienteVO.setNum_conta(clienteDTO.getNum_conta());
+                clienteRepository.save(clienteVO);
             }
 
 
-        return ResponseEntity.ok().body(cadastro);
+        return ResponseEntity.ok().body(clienteVO);
 
     }
     }
