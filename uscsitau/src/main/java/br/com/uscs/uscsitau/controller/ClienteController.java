@@ -81,8 +81,42 @@ public class ClienteController {
     }
     
     @PutMapping("/atualizaClientes") //Utilizado para atualização de cadastros
-    public Cliente atualizaClientes(@RequestBody Cliente cadastro) {
-    	return clienteRepository.save(cadastro);
+    public String atualizaClientes(@RequestBody Cliente cadastro) {
+        try{
+
+            CpfCnpj cpfCnpjCadastro = new CpfCnpj(cadastro.getCpf_cnpj(),
+                    cadastro.getTipo_de_cliente());
+
+            if (!cpfCnpjCadastro.isValid()) {
+                throw new IllegalStateException();
+            }
+
+            List<Cliente> clientes = (List<Cliente>) clienteRepository.findAll();
+            AtomicBoolean exists = new AtomicBoolean();
+            clientes.forEach(item -> {
+                CpfCnpj cpfCnpjCadastrado = new CpfCnpj(item.getCpf_cnpj(),
+                        item.getTipo_de_cliente());
+
+                if(cpfCnpjCadastrado.getNumber().equals(cpfCnpjCadastro.getNumber())) {
+                    exists.set(true);
+                }
+            });
+
+            if (!exists.get()) {
+                throw new IllegalArgumentException();
+            } else {
+                clienteRepository.save(cadastro);
+            }
+
+        } catch (IllegalArgumentException ex) {
+            return ("Cliente com cpf/cnpj " + cadastro.getCpf_cnpj() + " nao cadastrado");
+        }
+
+        catch (IllegalStateException ex) {
+            return ("Cpf/Cnpj " + cadastro.getCpf_cnpj() + " invalido");
+        }
+
+        return ("Cliente "+ cadastro.getNome() +" atualizado com sucesso");
     }
 
 }
