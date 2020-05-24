@@ -1,6 +1,5 @@
-<p align="center">
 # USCS/Itaú Project
-
+<p align="center">
 <img alt="CaseItau" src="https://github.com/Lucas19932020/Itau_Repository/blob/master/Images/Ita%C3%BA%20image.PNG" width="400" />
 </p>
 
