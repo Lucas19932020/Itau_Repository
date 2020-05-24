@@ -1,5 +1,8 @@
 # USCS/Itaú Project
 
+<img alt="CaseItau" src="https://github.com/Lucas19932020/Itau_Repository/blob/master/Images/Ita%C3%BA%20image.PNG" width="400" />
+
+
 Used technologies in the project:
 
 - SpringBoot
