@@ -38,7 +38,7 @@ Site to download [Docker](https://docs.docker.com/get-docker/).
 
   `docker pull datastax/dse-server:5.1.18`
 
-  **3.2. Para criar o container da *Cassandra*, execute o comando:**
+  **3.2. To create a *Cassandra* conteiner, execute the command:**
   
   `docker run -e DS_LICENSE=accept --memory 4g --name cassandra -p 9042:9042 -d datastax/dse-server:5.1.18`
 
