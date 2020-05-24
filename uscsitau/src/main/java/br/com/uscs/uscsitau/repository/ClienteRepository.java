@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 import br.com.uscs.uscsitau.models.clientes;
 
 @Repository
-public interface ClienteRepository extends CrudRepository<clientes, String> {}
+public interface ClienteRepository extends CrudRepository<clientes, String> {
+	//clientes findById(String cpf_cnpj);
+}
