@@ -32,5 +32,36 @@ public class Conta implements Serializable{
 	@Column(value = "saldo")
     double saldo;
 	
+	public String getNum_conta() {
+	        return num_conta;
+	    }
+
+	public void setNum_conta(String num_conta) {
+	        this.num_conta = num_conta;
+	    }
+	
+	public String getAgencia() {
+		   return agencia;
+		}
+
+	public void setAgencia(String agencia) {
+	       this.agencia = agencia;
+	    }
+	
+	public int getDac() {
+	       return dac;
+	    }
+	public void setDac(int dac) {
+           this.dac = dac;
+	    }
+	
+	public double getSaldo() {
+			return saldo;
+		}
+
+	public void setSaldo(double saldo) {
+	        this.saldo = saldo;
+	    }
+	
 	
 }
