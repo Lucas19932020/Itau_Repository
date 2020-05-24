@@ -21,32 +21,22 @@ public class ContaController {
 	@Autowired
 	ContaRepository contaRepository;
 	
-	@GetMapping("/listaContas")
+	@GetMapping("/lista")
 	public List<Conta> listaContas(){
 		return (List<Conta>) contaRepository.findAll();
 	}
 	
-	@PostMapping("/salvaConta")
+	@PostMapping("/salva")
 		public Conta salvaConta(@RequestBody Conta contaSalva) {
-		
-		
-		/*if (!exits.get()) {
-			contaRepository.save(contaSalva);
-			Conta conta = new Conta();
-			conta.setAgencia(0001);
-			conta.setDac(1);
-			conta.setSaldo(0);
-			contaRepository.save(conta);
-		}*/
 		return contaRepository.save(contaSalva);
 	}
 	
-	@DeleteMapping("/deletaConta")
+	@DeleteMapping("/deleta")
 	public void deletaConta(@RequestBody Conta contaDeleta) {
 		contaRepository.delete(contaDeleta);
 	}
 	
-	@PutMapping("/atualizaConta")
+	@PutMapping("/atualiza")
 	public Conta atualizaConta(@RequestBody Conta contaAtual) {
 		return contaRepository.save(contaAtual);
 	}

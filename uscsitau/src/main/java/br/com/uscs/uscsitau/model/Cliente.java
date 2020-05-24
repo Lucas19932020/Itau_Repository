@@ -11,14 +11,9 @@ import org.springframework.data.cassandra.core.mapping.Table;
 import lombok.Builder;
 import lombok.Data;
 
-@Data
-@Builder
 @Table(value = "cliente")
 public class Cliente implements Serializable {
 
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	@Column(value = "nome")
     String nome;

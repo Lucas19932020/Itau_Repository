@@ -1,10 +1,16 @@
 package br.com.uscs.uscsitau.controller;
 
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import br.com.uscs.uscsitau.errorhandling.AppException;
+import br.com.uscs.uscsitau.errorhandling.ErrorCode;
+import br.com.uscs.uscsitau.model.Conta;
+import br.com.uscs.uscsitau.repository.ContaRepository;
 import br.com.uscs.uscsitau.utils.CpfCnpj;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,7 +31,10 @@ public class ClienteController {
     @Autowired
     ClienteRepository clienteRepository;
 
-    @GetMapping("/listaClientes")
+    @Autowired
+    ContaRepository contaRepository;
+
+    @GetMapping("/lista")
     public List<Cliente> listaClientes(){
         return (List<Cliente>) clienteRepository.findAll();
     }
@@ -36,59 +45,61 @@ public class ClienteController {
     }*/ //Pesquisar sobre pesquisa de apenas um cliente
 
 
-    @PostMapping("/salvaClientes")
-    public String salvaClientes(@RequestBody Cliente cadastro) {
+    @PostMapping("/salva")
+    public ResponseEntity salvaClientes(@RequestBody Cliente cadastro) {
 
-        try{
 
-            CpfCnpj cpfCnpjCadastro = new CpfCnpj(cadastro.getCpf_cnpj(),
-                    cadastro.getTipo_de_cliente());
+        CpfCnpj cpfCnpjCadastro = new CpfCnpj(cadastro.getCpf_cnpj());
 
-            if (!cpfCnpjCadastro.isValid()) {
-                throw new IllegalStateException();
-            }
-
-            List<Cliente> clientes = (List<Cliente>) clienteRepository.findAll();
-            AtomicBoolean exists = new AtomicBoolean();
-            clientes.forEach(item -> {
-                CpfCnpj cpfCnpjCadastrado = new CpfCnpj(item.getCpf_cnpj(),
-                        item.getTipo_de_cliente());
-
-                if(cpfCnpjCadastrado.getNumber().equals(cpfCnpjCadastro.getNumber())) {
-                    exists.set(true);
-                    throw new IllegalArgumentException();
-                }
-            });
-
-            if (!exists.get()) {
-                clienteRepository.save(cadastro);
-            }
-
-        } catch (IllegalArgumentException ex) {
-            return ("Cliente com cpf/cnpj " + cadastro.getCpf_cnpj() + " ja cadastrado");
+        if (!cpfCnpjCadastro.isValid()) {
+            return ResponseEntity.badRequest().body(new AppException(ErrorCode.CPF_CNPJ_INVALID));
         }
 
-        catch (IllegalStateException ex) {
-            return ("Cpf/Cnpj " + cadastro.getCpf_cnpj() + " invalido");
+        List<Cliente> clientes = (List<Cliente>) clienteRepository.findAll();
+        AtomicBoolean exists = new AtomicBoolean();
+        clientes.forEach(item -> {
+            CpfCnpj cpfCnpjCadastrado = new CpfCnpj(item.getCpf_cnpj(),
+                    item.getTipo_de_cliente());
+
+            if (cpfCnpjCadastrado.getNumber().equals(cpfCnpjCadastro.getNumber())) {
+                exists.set(true);
+            }
+        });
+
+        if (!exists.get()) {
+
+			Conta conta = new Conta();
+			conta.setAgencia(String.valueOf(new Random().nextInt(9999)));
+			conta.setDac(1);
+			conta.setSaldo(0);
+			conta.setNum_conta(String.valueOf(new Random().nextInt(999999999)));
+			contaRepository.save(conta);
+
+			cadastro.setNum_conta(conta.getNum_conta());
+            clienteRepository.save(cadastro);
+        } else {
+            return ResponseEntity.badRequest().body(new AppException(ErrorCode.CPF_CNPJ_ALREADY_EXISTS));
         }
 
-        return ("Cliente "+ cadastro.getNome() +" cadastrado com sucesso");
+        return ResponseEntity.ok().body(cadastro);
     }
     
-    @DeleteMapping("/deletaClientes") //Se colocado apenas o CPF o clinete é deletado! Forma de se colocar no Postman  {"cpf_cnpj": "445.000.000-15"}
-    public void deletaClientes(@RequestBody Cliente cadastro) {
+    @DeleteMapping("/deleta") //Se colocado apenas o CPF o clinete é deletado! Forma de se colocar no Postman  {"cpf_cnpj": "445.000.000-15"}
+    public ResponseEntity deletaClientes(@RequestBody Cliente cadastro) {
+
     	clienteRepository.delete(cadastro);
+
+        return ResponseEntity.ok().body(cadastro);
+
     }
     
-    @PutMapping("/atualizaClientes") //Utilizado para atualização de cadastros
-    public String atualizaClientes(@RequestBody Cliente cadastro) {
-        try{
+    @PutMapping("/atualiza") //Utilizado para atualização de cadastros
+    public ResponseEntity atualizaClientes(@RequestBody Cliente cadastro) {
 
-            CpfCnpj cpfCnpjCadastro = new CpfCnpj(cadastro.getCpf_cnpj(),
-                    cadastro.getTipo_de_cliente());
+            CpfCnpj cpfCnpjCadastro = new CpfCnpj(cadastro.getCpf_cnpj());
 
             if (!cpfCnpjCadastro.isValid()) {
-                throw new IllegalStateException();
+                return ResponseEntity.badRequest().body(new AppException(ErrorCode.CPF_CNPJ_INVALID));
             }
 
             List<Cliente> clientes = (List<Cliente>) clienteRepository.findAll();
@@ -103,20 +114,13 @@ public class ClienteController {
             });
 
             if (!exists.get()) {
-                throw new IllegalArgumentException();
+                return ResponseEntity.badRequest().body(new AppException(ErrorCode.CPF_CNPJ_NOT_FOUND));
             } else {
                 clienteRepository.save(cadastro);
             }
 
-        } catch (IllegalArgumentException ex) {
-            return ("Cliente com cpf/cnpj " + cadastro.getCpf_cnpj() + " nao cadastrado");
-        }
 
-        catch (IllegalStateException ex) {
-            return ("Cpf/Cnpj " + cadastro.getCpf_cnpj() + " invalido");
-        }
+        return ResponseEntity.ok().body(cadastro);
 
-        return ("Cliente "+ cadastro.getNome() +" atualizado com sucesso");
     }
-
-}
+    }
