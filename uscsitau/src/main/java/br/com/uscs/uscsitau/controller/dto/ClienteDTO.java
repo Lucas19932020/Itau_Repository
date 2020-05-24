@@ -1,40 +1,15 @@
-package br.com.uscs.uscsitau.model;
+package br.com.uscs.uscsitau.controller.dto;
 
-import java.io.Serializable;
+public class ClienteDTO {
 
-
-import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
-import org.springframework.data.cassandra.core.mapping.Column;
-import org.springframework.data.cassandra.core.mapping.PrimaryKeyColumn;
-import org.springframework.data.cassandra.core.mapping.Table;
-
-import lombok.Builder;
-import lombok.Data;
-
-@Table(value = "cliente")
-public class Cliente implements Serializable {
-
-	private static final long serialVersionUID = 1L;
-	@Column(value = "nome")
-    String nome;
-    @PrimaryKeyColumn(
-            name = "cpf_cnpj",
-            ordinal = 1,
-            type = PrimaryKeyType.PARTITIONED
-    )
-    String cpf_cnpj;
-    @Column(value = "tipo_de_cliente")
-    String tipo_de_cliente;
-    @Column(value = "endereco")
-    String endereco;
-    @Column(value = "renda")
-    double renda;
-    @Column(value = "razao_social")
-    String razao_social;
-    @Column(value = "incr_estadual")
-    String incr_estadual;
-    @Column(value = "num_conta")
-    String num_conta;
+    private String nome;
+    private String cpf_cnpj;
+    private String tipo_de_cliente;
+    private String endereco;
+    private Double renda;
+    private String razao_social;
+    private String incr_estadual;
+    private String num_conta;
 
     public String getNome() {
         return nome;
@@ -68,11 +43,11 @@ public class Cliente implements Serializable {
         this.endereco = endereco;
     }
 
-    public double getRenda() {
+    public Double getRenda() {
         return renda;
     }
 
-    public void setRenda(double renda) {
+    public void setRenda(Double renda) {
         this.renda = renda;
     }
 

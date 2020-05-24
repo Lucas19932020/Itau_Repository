@@ -12,8 +12,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+<<<<<<< HEAD
 import br.com.uscs.uscsitau.model.Conta;
 import br.com.uscs.uscsitau.model.Historico;
+=======
+import br.com.uscs.uscsitau.model.HistoricoVO;
+>>>>>>> refs/remotes/origin/master
 import br.com.uscs.uscsitau.repository.HistoricoRepository;
 
 @RequestMapping(value="/historico")
@@ -23,9 +27,15 @@ public class HistoricoController {
 	HistoricoRepository historicoRepository;
 
 	
+<<<<<<< HEAD
 	@GetMapping("/listaHistoricos")
 	public List<Historico> listaHistoricos(){
 		return (List<Historico>) historicoRepository.findAll(); 
+=======
+	@GetMapping("/listaHistorico")
+	public List<HistoricoVO> listaHistoricos(){
+		return (List<HistoricoVO>) historicoRepository.findAll();
+>>>>>>> refs/remotes/origin/master
 	}
 	
 	@PostMapping("/salvaHistoricos")

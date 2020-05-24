@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.uscs.uscsitau.model.Conta;
+import br.com.uscs.uscsitau.model.ContaVO;
 import br.com.uscs.uscsitau.repository.ContaRepository;
 
 @RestController
@@ -22,22 +22,22 @@ public class ContaController {
 	ContaRepository contaRepository;
 	
 	@GetMapping("/lista")
-	public List<Conta> listaContas(){
-		return (List<Conta>) contaRepository.findAll();
+	public List<ContaVO> listaContas(){
+		return (List<ContaVO>) contaRepository.findAll();
 	}
 	
-	@PostMapping("/salva")
-		public Conta salvaConta(@RequestBody Conta contaSalva) {
-		return contaRepository.save(contaSalva);
+	@PostMapping("/salvar")
+		public ContaVO salvaConta(@RequestBody ContaVO contaVOSalva) {
+		return contaRepository.save(contaVOSalva);
 	}
 	
-	@DeleteMapping("/deleta")
-	public void deletaConta(@RequestBody Conta contaDeleta) {
-		contaRepository.delete(contaDeleta);
+	@DeleteMapping("/deletar")
+	public void deletaConta(@RequestBody ContaVO contaVODeleta) {
+		contaRepository.delete(contaVODeleta);
 	}
 	
-	@PutMapping("/atualiza")
-	public Conta atualizaConta(@RequestBody Conta contaAtual) {
-		return contaRepository.save(contaAtual);
+	@PutMapping("/atualizar")
+	public ContaVO atualizaConta(@RequestBody ContaVO contaVOAtual) {
+		return contaRepository.save(contaVOAtual);
 	}
 }
