@@ -1,5 +1,5 @@
 <p align="center">
-## Case Banco Itaú
+# Case Banco Itaú
 </p>
 
 
