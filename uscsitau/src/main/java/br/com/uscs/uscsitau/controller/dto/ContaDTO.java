@@ -6,6 +6,8 @@ public class ContaDTO {
     private String agencia;
     private Integer dac;
     private double saldo;
+    private double credito;
+    private double debito;
 
     public String getNum_conta() {
         return num_conta;
@@ -37,5 +39,21 @@ public class ContaDTO {
 
     public void setSaldo(double saldo) {
         this.saldo = saldo;
+    }
+
+    public double getCredito() {
+        return credito;
+    }
+
+    public void setCredito(double credito) {
+        this.credito = credito;
+    }
+
+    public double getDebito() {
+        return debito;
+    }
+
+    public void setDebito(double debito) {
+        this.debito = debito;
     }
 }
