@@ -98,7 +98,7 @@ Site to download [Docker](https://docs.docker.com/get-docker/).
   CREATE TABLE historico (
       num_conta VARCHAR PRIMARY KEY,
       tipo_de_transacao VARCHAR,
-      data DATE,
+      data TIMESTAMP,
       status INT
   );
 ```
