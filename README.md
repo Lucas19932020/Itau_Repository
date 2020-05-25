@@ -119,10 +119,10 @@ Site to download [Docker](https://docs.docker.com/get-docker/).
 
   **4.4. To create a Topic in Kafka, execute the command:**
 
-    ```bash
+  ```bash
     docker-compose exec kafka  \
     kafka-topics --create --topic bank-listener --partitions 3 --replication-factor 1 --if-not-exists --zookeeper zookeeper:2181
-    ```
+  ```
     
   **4.5. To validate that the Topic was created, run the command:**
 
@@ -138,6 +138,6 @@ Execute the class `StartApplication`.
 ## Routing
 
 ```bash
-  POST    http://localhost:8080/cadastrados/cliente
-  GET     http://localhost:8080/cadastrados/cliente
+  POST    http://localhost:8080/clientes/lista
+  GET     http://localhost:8080/clientes/salvar
 ```
