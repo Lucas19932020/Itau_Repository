@@ -21,7 +21,7 @@ public class HistoricoVO implements Serializable{
      */
     private static final long serialVersionUID = 1L;
     @PrimaryKeyColumn(
-            name = "cpf_cnpj",
+            name = "num_conta",
             ordinal = 1,
             type = PrimaryKeyType.PARTITIONED
     )

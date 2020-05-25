@@ -4,17 +4,17 @@ import java.util.Date;
 
 public class HistoricoDTO {
 
-    private String cpf_cnpj;
+    private String num_conta;
     private String tipo_de_transacao;
     private Date date;
     private Integer status; // Failed = 0, Success = 1
 
     public String getCpf_cnpj() {
-        return cpf_cnpj;
+        return num_conta;
     }
 
     public void setCpf_cnpj(String cpf_cnpj) {
-        this.cpf_cnpj = cpf_cnpj;
+        this.num_conta = cpf_cnpj;
     }
 
     public String getTipo_de_transacao() {

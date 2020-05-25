@@ -1,10 +1,12 @@
 package br.com.uscs.uscsitau.controller;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import br.com.uscs.uscsitau.controller.dto.ClienteDTO;
 import br.com.uscs.uscsitau.errorhandling.AppException;
 import br.com.uscs.uscsitau.errorhandling.ErrorCode;
+import br.com.uscs.uscsitau.kafka.OrderProducer;
 import br.com.uscs.uscsitau.model.ContaVO;
 import br.com.uscs.uscsitau.repository.ContaRepository;
 import br.com.uscs.uscsitau.utils.CpfCnpj;
@@ -25,6 +27,12 @@ public class ClienteController {
 
     @Autowired
     ContaRepository contaRepository;
+
+    private final OrderProducer orderProducer;
+
+    public ClienteController(OrderProducer orderProducer) {
+        this.orderProducer = orderProducer;
+    }
 
     @GetMapping("/lista")
     public List<ClienteVO> listaClientes(){
@@ -66,7 +74,8 @@ public class ClienteController {
             if (clienteRepository.getClienteByCPFCNPJ(new CpfCnpj(clienteDTO.getCpf_cnpj()).getCpfCnpj()).isEmpty()) {
 
                 ContaVO contaVO = new ContaVO();
-                contaVO.setAgencia(String.valueOf(new Random().nextInt(9999 - 1111) + 1 + 1111));                contaVO.setDac(1);
+                contaVO.setAgencia(String.valueOf(new Random().nextInt(9999 - 1111) + 1 + 1111));
+                contaVO.setDac(1);
                 contaVO.setSaldo(0);
                 String num_conta = String.valueOf(new Random().nextInt(999999999 - 111111111) + 1 + 111111111).replaceAll("/\\D/g", "");
                 num_conta = num_conta.replaceAll("([0-9]{8})([0-9]{1})", "$1-$2");
@@ -140,16 +149,18 @@ public class ClienteController {
             if (clienteRepository.getClienteByCPFCNPJ(new CpfCnpj(clienteDTO.getCpf_cnpj()).getCpfCnpj()).isEmpty()) {
                 return ResponseEntity.badRequest().body(new AppException(ErrorCode.CPF_CNPJ_NOT_FOUND));
             } else {
+                ClienteVO vo = clienteRepository.getClienteByCPFCNPJ(new CpfCnpj(clienteDTO.getCpf_cnpj()).getCpfCnpj()).get(0);
+                vo.setNome(clienteDTO.getNome());
+                vo.setEndereco(clienteDTO.getEndereco());
+                vo.setRenda(clienteDTO.getRenda());
+                vo.setRazao_social(clienteDTO.getRazao_social());
+                vo.setIncr_estadual(clienteDTO.getIncr_estadual());
+                clienteRepository.save(vo);
 
-                clienteVO.setNome(clienteDTO.getNome());
-                clienteVO.setEndereco(clienteDTO.getEndereco());
-                clienteVO.setRenda(clienteDTO.getRenda());
-                clienteVO.setRazao_social(clienteDTO.getRazao_social());
-                clienteVO.setIncr_estadual(clienteDTO.getIncr_estadual());
-                clienteRepository.save(clienteVO);
+                orderProducer.send(vo);
+
+                return ResponseEntity.status(200).body(vo);
             }
-
-        return ResponseEntity.ok().body(clienteVO);
 
         } catch (Exception ex) {
             return ResponseEntity.status(500).body(new AppException(ErrorCode.BAD_REQUEST));
