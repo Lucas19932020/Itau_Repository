@@ -1,21 +1,21 @@
 package br.com.uscs.uscsitau.controller;
 
-import java.sql.Timestamp;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
 import br.com.uscs.uscsitau.controller.dto.ClienteDTO;
 import br.com.uscs.uscsitau.errorhandling.AppException;
 import br.com.uscs.uscsitau.errorhandling.ErrorCode;
 import br.com.uscs.uscsitau.kafka.OrderProducer;
+import br.com.uscs.uscsitau.model.ClienteVO;
 import br.com.uscs.uscsitau.model.ContaVO;
+import br.com.uscs.uscsitau.repository.ClienteRepository;
 import br.com.uscs.uscsitau.repository.ContaRepository;
 import br.com.uscs.uscsitau.utils.CpfCnpj;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import br.com.uscs.uscsitau.model.ClienteVO;
-import br.com.uscs.uscsitau.repository.ClienteRepository;
+
+import java.sql.Timestamp;
+import java.util.List;
+import java.util.Random;
 
 
 @RestController
@@ -156,9 +156,7 @@ public class ClienteController {
                 vo.setRazao_social(clienteDTO.getRazao_social());
                 vo.setIncr_estadual(clienteDTO.getIncr_estadual());
                 clienteRepository.save(vo);
-
-                orderProducer.send(vo, "Cadastro", new Timestamp(System.currentTimeMillis()), 1);
-
+                
                 return ResponseEntity.status(200).body(vo);
             }
 

@@ -1,12 +1,10 @@
 package br.com.uscs.uscsitau.kafka;
 
 import br.com.uscs.uscsitau.controller.dto.HistoricoDTO;
-import br.com.uscs.uscsitau.model.HistoricoVO;
 import br.com.uscs.uscsitau.repository.HistoricoRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -14,7 +12,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.UUID;
 
 @Component

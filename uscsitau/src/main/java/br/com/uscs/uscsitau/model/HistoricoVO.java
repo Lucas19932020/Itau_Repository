@@ -1,17 +1,15 @@
 package br.com.uscs.uscsitau.model;
 
-import java.io.Serializable;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.util.UUID;
-
+import lombok.Builder;
+import lombok.Data;
 import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
 import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKeyColumn;
 import org.springframework.data.cassandra.core.mapping.Table;
 
-import lombok.Builder;
-import lombok.Data;
+import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.UUID;
 
 @Data
 @Builder
