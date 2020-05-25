@@ -96,7 +96,7 @@ Site to download [Docker](https://docs.docker.com/get-docker/).
 ```
 ```bash
   CREATE TABLE historico (
-      cpf_cnpj VARCHAR PRIMARY KEY,
+      num_conta VARCHAR PRIMARY KEY,
       tipo_de_transacao VARCHAR,
       data DATE,
       status INT
