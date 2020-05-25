@@ -15,12 +15,12 @@ import lombok.Data;
 @Builder
 @Table(value = "historico")
 public class HistoricoVO implements Serializable{
- 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	@PrimaryKeyColumn(
+
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
+    @PrimaryKeyColumn(
             name = "cpf_cnpj",
             ordinal = 1,
             type = PrimaryKeyType.PARTITIONED
@@ -32,5 +32,14 @@ public class HistoricoVO implements Serializable{
     int status;
     @Column(value = "data")
     LocalDateTime data;
+
+    public String getCpf_cnpj() {
+        return cpf_cnpj;
+    }
+
+    public void setCpf_cnpj(String cpf_cnpj) {
+        this.cpf_cnpj = cpf_cnpj;
+    }
+
 
 }
