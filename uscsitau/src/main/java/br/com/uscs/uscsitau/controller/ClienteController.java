@@ -1,6 +1,5 @@
 package br.com.uscs.uscsitau.controller;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import br.com.uscs.uscsitau.controller.dto.ClienteDTO;
@@ -75,7 +74,6 @@ public class ClienteController {
 
                 ContaVO contaVO = new ContaVO();
                 contaVO.setAgencia(String.valueOf(new Random().nextInt(9999 - 1111) + 1 + 1111));
-                contaVO.setDac(1);
                 contaVO.setSaldo(0);
                 String num_conta = String.valueOf(new Random().nextInt(999999999 - 111111111) + 1 + 111111111).replaceAll("/\\D/g", "");
                 num_conta = num_conta.replaceAll("([0-9]{8})([0-9]{1})", "$1-$2");
@@ -94,6 +92,8 @@ public class ClienteController {
 
                 clienteRepository.save(clienteVO);
 
+                orderProducer.send(clienteVO);
+
             } else {
                 return ResponseEntity.status(400).body(new AppException(ErrorCode.CPF_CNPJ_ALREADY_EXISTS));
             }
@@ -107,7 +107,7 @@ public class ClienteController {
 
     }
     
-    @DeleteMapping("/deletar") //Se colocado apenas o CPF o clinete é deletado! Forma de se colocar no Postman  {"cpf_cnpj": "445.000.000-15"}
+    @DeleteMapping("/deletar") //Se colocado apenas o CPF o cliente é deletado! Forma de se colocar no Postman  {"cpf_cnpj": "445.000.000-15"}
     public ResponseEntity deletaClientes(@RequestBody ClienteDTO clienteDTO) {
 
         try {
@@ -139,12 +139,10 @@ public class ClienteController {
         try {
 
             CpfCnpj cpfCnpjCadastro = new CpfCnpj(clienteDTO.getCpf_cnpj());
-            ClienteVO clienteVO = new ClienteVO();
 
             if (!cpfCnpjCadastro.isValid()) {
                 return ResponseEntity.badRequest().body(new AppException(ErrorCode.CPF_CNPJ_INVALID));
             }
-
 
             if (clienteRepository.getClienteByCPFCNPJ(new CpfCnpj(clienteDTO.getCpf_cnpj()).getCpfCnpj()).isEmpty()) {
                 return ResponseEntity.badRequest().body(new AppException(ErrorCode.CPF_CNPJ_NOT_FOUND));

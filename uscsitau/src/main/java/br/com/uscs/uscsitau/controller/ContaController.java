@@ -3,6 +3,7 @@ package br.com.uscs.uscsitau.controller;
 import br.com.uscs.uscsitau.controller.dto.ContaDTO;
 import br.com.uscs.uscsitau.errorhandling.AppException;
 import br.com.uscs.uscsitau.errorhandling.ErrorCode;
+import br.com.uscs.uscsitau.kafka.OrderProducer;
 import br.com.uscs.uscsitau.model.ContaVO;
 import br.com.uscs.uscsitau.repository.ContaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,13 @@ public class ContaController {
 	
 	@Autowired
 	ContaRepository contaRepository;
-	
+
+	private final OrderProducer orderProducer;
+
+	public ContaController(OrderProducer orderProducer) {
+		this.orderProducer = orderProducer;
+	}
+
 	@GetMapping("/lista")
 	public List<ContaVO> listaContas(){
 		return (List<ContaVO>) contaRepository.findAll();
@@ -31,7 +38,7 @@ public class ContaController {
 
 			num_conta = contaDTO.getNum_conta().replaceAll("/\\D/g", "");
 
-			num_conta = contaDTO.getNum_conta().replaceAll("([0-9]{8})([0-9]{1})", "$1-$2");
+			num_conta = num_conta.replaceAll("([0-9]{8})([0-9]{1})", "$1-$2");
 
 			if (contaRepository.getContaByNumConta(num_conta).isEmpty()) {
 				return ResponseEntity.status(404).body(new AppException(ErrorCode.ACCOUNT_NOT_FOUND));
@@ -42,6 +49,8 @@ public class ContaController {
 			contaVO.setSaldo(contaVO.getSaldo() + contaDTO.getCredito());
 
 			contaRepository.save(contaVO);
+
+			orderProducer.send(contaVO);
 
 			return ResponseEntity.ok().body(contaVO);
 
