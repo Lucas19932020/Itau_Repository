@@ -95,8 +95,9 @@ Site to download [Docker](https://docs.docker.com/get-docker/).
   );
 ```
 ```bash
-  CREATE TABLE historico (
-      num_conta VARCHAR PRIMARY KEY,
+  CREATE TABLE historico (	
+      id UUID PRIMARY KEY,
+      num_conta VARCHAR,
       tipo_de_transacao VARCHAR,
       data TIMESTAMP,
       status INT
