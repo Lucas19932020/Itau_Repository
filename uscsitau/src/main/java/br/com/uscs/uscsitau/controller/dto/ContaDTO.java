@@ -1,6 +1,6 @@
 package br.com.uscs.uscsitau.controller.dto;
 
-public class ContaCorrenteDTO {
+public class ContaDTO {
 
     private String num_conta;
     private String agencia;

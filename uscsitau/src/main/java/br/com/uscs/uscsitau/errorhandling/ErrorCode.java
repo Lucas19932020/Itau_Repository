@@ -5,7 +5,9 @@ public enum ErrorCode {
     CPF_CNPJ_ALREADY_EXISTS(1000, "CPF / CNPJ ja existe"),
     CPF_CNPJ_CANNOT_BE_NULL_OR_EMPTY(1001, "CPF / CNPJ nao pode ser nulo ou vazio"),
     CPF_CNPJ_NOT_FOUND(1002, "CPF / CNPJ nao existe"),
-    CPF_CNPJ_INVALID(1003, "CPF / CNPJ Invalido");
+    CPF_CNPJ_INVALID(1003, "CPF / CNPJ Invalido"),
+    ACCOUNT_NOT_FOUND(1006, "Conta nao existente"),
+    BAD_REQUEST(204, "Erro ao executar");
 
     private Integer code;
     private String message;
