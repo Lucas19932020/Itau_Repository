@@ -1,4 +1,4 @@
-package br.com.itaulistener.kafaka.contoller;
+package br.com.itaulistener.kafaka.controller;
 
 import java.util.List;
 
