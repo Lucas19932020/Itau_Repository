@@ -1,5 +1,7 @@
 package br.com.uscs.uscsitau.controller;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import br.com.uscs.uscsitau.controller.dto.ClienteDTO;
@@ -92,7 +94,7 @@ public class ClienteController {
 
                 clienteRepository.save(clienteVO);
 
-                orderProducer.send(clienteVO);
+                orderProducer.send(clienteVO, "Cadastro", new Timestamp(System.currentTimeMillis()), 1);
 
             } else {
                 return ResponseEntity.status(400).body(new AppException(ErrorCode.CPF_CNPJ_ALREADY_EXISTS));
@@ -155,7 +157,7 @@ public class ClienteController {
                 vo.setIncr_estadual(clienteDTO.getIncr_estadual());
                 clienteRepository.save(vo);
 
-                orderProducer.send(vo);
+                orderProducer.send(vo, "Cadastro", new Timestamp(System.currentTimeMillis()), 1);
 
                 return ResponseEntity.status(200).body(vo);
             }

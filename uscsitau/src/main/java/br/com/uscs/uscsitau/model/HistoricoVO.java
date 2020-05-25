@@ -1,7 +1,9 @@
 package br.com.uscs.uscsitau.model;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
 import org.springframework.data.cassandra.core.mapping.Column;
@@ -21,25 +23,49 @@ public class HistoricoVO implements Serializable{
      */
     private static final long serialVersionUID = 1L;
     @PrimaryKeyColumn(
-            name = "num_conta",
+            name = "id",
             ordinal = 1,
             type = PrimaryKeyType.PARTITIONED
     )
-    String cpf_cnpj;
+    private UUID id;
+    @Column(value = "num_conta")
+    private String num_conta;
     @Column(value = "tipo_de_transacao")
     String tipo_de_transacao;
     @Column(value = "status")
     int status;
     @Column(value = "data")
-    LocalDateTime data;
+    Timestamp data;
 
-    public String getCpf_cnpj() {
-        return cpf_cnpj;
+    public String getNum_conta() {
+        return num_conta;
     }
 
-    public void setCpf_cnpj(String cpf_cnpj) {
-        this.cpf_cnpj = cpf_cnpj;
+    public void setNum_conta(String num_conta) {
+        this.num_conta = num_conta;
     }
 
+    public String getTipo_de_transacao() {
+        return tipo_de_transacao;
+    }
 
+    public void setTipo_de_transacao(String tipo_de_transacao) {
+        this.tipo_de_transacao = tipo_de_transacao;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public Timestamp getData() {
+        return data;
+    }
+
+    public void setData(Timestamp data) {
+        this.data = data;
+    }
 }

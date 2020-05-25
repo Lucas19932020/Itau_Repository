@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -50,7 +52,7 @@ public class ContaController {
 
 			contaRepository.save(contaVO);
 
-			orderProducer.send(contaVO);
+			orderProducer.send(contaVO, "credito de: " + contaDTO.getCredito(), new Timestamp(System.currentTimeMillis()), 1);
 
 			return ResponseEntity.ok().body(contaVO);
 
@@ -77,12 +79,16 @@ public class ContaController {
 			ContaVO contaVO = contaRepository.getContaByNumConta(num_conta).get(0);
 
 			if (contaVO.getSaldo() - contaDTO.getDebito() < 0) {
+
+				orderProducer.send(contaVO, "Tentativa de debito de: " + contaDTO.getDebito(), new Timestamp(System.currentTimeMillis()), 0);
 				return ResponseEntity.status(404).body(new AppException(ErrorCode.INSUFFICIENT_FUNDS));
 			} else {
 				contaVO.setSaldo(contaVO.getSaldo() - contaDTO.getDebito());
 			}
 
 			contaRepository.save(contaVO);
+
+			orderProducer.send(contaVO, "Debito de: " + contaDTO.getDebito(), new Timestamp(System.currentTimeMillis()), 1);
 
 			return ResponseEntity.ok().body(contaVO);
 

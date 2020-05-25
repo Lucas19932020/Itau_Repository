@@ -1,20 +1,22 @@
 package br.com.uscs.uscsitau.controller.dto;
 
-import java.util.Date;
+import java.sql.Timestamp;
+import java.util.UUID;
 
 public class HistoricoDTO {
 
+    private UUID id;
     private String num_conta;
     private String tipo_de_transacao;
-    private Date date;
+    private Timestamp data;
     private Integer status; // Failed = 0, Success = 1
 
-    public String getCpf_cnpj() {
+    public String getNum_conta() {
         return num_conta;
     }
 
-    public void setCpf_cnpj(String cpf_cnpj) {
-        this.num_conta = cpf_cnpj;
+    public void setNum_conta(String num_conta) {
+        this.num_conta = num_conta;
     }
 
     public String getTipo_de_transacao() {
@@ -25,12 +27,12 @@ public class HistoricoDTO {
         this.tipo_de_transacao = tipo_de_transacao;
     }
 
-    public Date getDate() {
-        return date;
+    public Timestamp getData() {
+        return data;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setData(Timestamp data) {
+        this.data = data;
     }
 
     public Integer getStatus() {
@@ -39,5 +41,13 @@ public class HistoricoDTO {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 }

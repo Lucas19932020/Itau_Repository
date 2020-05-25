@@ -1,14 +1,27 @@
 package br.com.uscs.uscsitau.kafka;
 
+import br.com.uscs.uscsitau.controller.dto.HistoricoDTO;
+import br.com.uscs.uscsitau.model.HistoricoVO;
+import br.com.uscs.uscsitau.repository.HistoricoRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.UUID;
+
 @Component
 public class OrderProducer {
+
+    @Autowired
+    HistoricoRepository historicoRepository;
 
     @Value("${spring.kafka.consumer.topic}")
     private String orderTopic;
@@ -19,10 +32,18 @@ public class OrderProducer {
         this.kafkaTemplate = kafkaTemplate;
     }
 
-    public void send(final @RequestBody Object obj) throws JsonProcessingException {
+    public void send(final @RequestBody Object obj, String tipoDeOper, Timestamp date, Integer status) throws JsonProcessingException {
 
-        ObjectMapper mapper = new ObjectMapper();
+        Gson gson = new Gson();
+        HistoricoDTO historicoDTO = gson.fromJson(new ObjectMapper().writeValueAsString(obj), HistoricoDTO.class);
+        historicoDTO.setId(UUID.randomUUID());
+        historicoDTO.setTipo_de_transacao(tipoDeOper);
+        historicoDTO.setData(date);
+        historicoDTO.setStatus(status);
 
-        kafkaTemplate.send(orderTopic, mapper.writeValueAsString(obj));
+        if (historicoRepository.getHistoricoById(historicoDTO.getId()).isEmpty()) {
+            kafkaTemplate.send(orderTopic, new ObjectMapper().writeValueAsString(historicoDTO));
+        }
+
     }
 }
