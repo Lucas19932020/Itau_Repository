@@ -126,6 +126,8 @@ public class ClienteController {
             clienteRepository.delete(clienteVO);
             contaRepository.delete(contaVO);
 
+            orderProducer.send(clienteVO, "Deleção de cliente", new Timestamp(System.currentTimeMillis()), 1);
+
             return ResponseEntity.status(204).build();
 
         } catch (Exception ex) {
@@ -156,7 +158,7 @@ public class ClienteController {
                 vo.setRazao_social(clienteDTO.getRazao_social());
                 vo.setIncr_estadual(clienteDTO.getIncr_estadual());
                 clienteRepository.save(vo);
-                
+
                 return ResponseEntity.status(200).body(vo);
             }
 

@@ -1,6 +1,7 @@
 package br.com.uscs.uscsitau.controller.dto;
 
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.UUID;
 
 public class HistoricoDTO {
@@ -8,7 +9,7 @@ public class HistoricoDTO {
     private UUID id;
     private String num_conta;
     private String tipo_de_transacao;
-    private Timestamp data;
+    private Date data;
     private Integer status; // Failed = 0, Success = 1
 
     public String getNum_conta() {
@@ -27,14 +28,6 @@ public class HistoricoDTO {
         this.tipo_de_transacao = tipo_de_transacao;
     }
 
-    public Timestamp getData() {
-        return data;
-    }
-
-    public void setData(Timestamp data) {
-        this.data = data;
-    }
-
     public Integer getStatus() {
         return status;
     }
@@ -49,5 +42,13 @@ public class HistoricoDTO {
 
     public void setId(UUID id) {
         this.id = id;
+    }
+
+    public Date getData() {
+        return data;
+    }
+
+    public void setData(Date data) {
+        this.data = data;
     }
 }

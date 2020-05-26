@@ -1,5 +1,7 @@
 package br.com.uscs.uscsitau.controller;
 
+import br.com.uscs.uscsitau.errorhandling.AppException;
+import br.com.uscs.uscsitau.errorhandling.ErrorCode;
 import br.com.uscs.uscsitau.model.HistoricoVO;
 import br.com.uscs.uscsitau.repository.HistoricoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,36 +10,23 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RestController
 @RequestMapping(value="/historico")
 public class HistoricoController {
 
 	@Autowired
 	HistoricoRepository historicoRepository;
 
-	@GetMapping("/listaHistorico")
-	public List<HistoricoVO> listaHistoricos(){
-		return (List<HistoricoVO>) historicoRepository.findAll();
-	}
+	@GetMapping("/lista")
+	public ResponseEntity listaHistoricos(){
+		try {
+			List<HistoricoVO> historicoVOS = (List<HistoricoVO>) historicoRepository.findAll();
 
-	@PostMapping("/salvaHistoricos")
-	public ResponseEntity salvaHistorico(@RequestBody HistoricoVO historicoVO){
+		return ResponseEntity.ok().body(historicoVOS);
 
-
-
-		historicoRepository.save(historicoVO);
-
-		return ResponseEntity.ok().body(historicoVO);
-
-	}
-
-	@DeleteMapping("/deletaHistoricos")
-	public void deletaHistorico(@RequestBody HistoricoVO historicoDeleta) {
-		historicoRepository.delete(historicoDeleta);
-	}
-
-	@PutMapping("/atualizaHistorico")
-	public HistoricoVO atualizaHistorico(@RequestBody HistoricoVO historicoAtual) {
-		return historicoRepository.save(historicoAtual);
+		} catch (Exception ex) {
+			return ResponseEntity.status(500).body(new AppException(ErrorCode.BAD_REQUEST));
+		}
 	}
 
 }

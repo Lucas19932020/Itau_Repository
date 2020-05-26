@@ -9,6 +9,7 @@ import org.springframework.data.cassandra.core.mapping.Table;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.UUID;
 
 @Data
@@ -33,7 +34,7 @@ public class HistoricoVO implements Serializable{
     @Column(value = "status")
     int status;
     @Column(value = "data")
-    Timestamp data;
+    Date data;
 
     public String getNum_conta() {
         return num_conta;
@@ -59,11 +60,19 @@ public class HistoricoVO implements Serializable{
         this.status = status;
     }
 
-    public Timestamp getData() {
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public Date getData() {
         return data;
     }
 
-    public void setData(Timestamp data) {
+    public void setData(Date data) {
         this.data = data;
     }
 }
