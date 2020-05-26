@@ -199,7 +199,7 @@ The informations that can be update are the client name, income, adress or compa
   DELETE     localhost:8080/clientes/deletar
 ```  
   The delete process is simple, it is only needed to write the client CPF or CNPJ like this formula:
-  {"cpf_cnpj": "client CPF/CNPJ number}
+  {"cpf_cnpj": "client CPF/CNPJ number}, after writing press send.
   <br>
   An example of deleting a client register:
   
@@ -207,3 +207,54 @@ The informations that can be update are the client name, income, adress or compa
   <img alt="Deleting a client" src="https://github.com/Lucas19932020/Itau_Repository/blob/master/Images/Images%20Case%20Itau%20-%20USCS%20Readme/11.%20Deleting%20a%20client.PNG" />
   </p>
 
+```bash  
+  Credit process  
+  POST     localhost:8080/conta/credito
+```
+  To credit a value is needed to inform the agency number and the value to be credited:
+  <br>
+  <br>
+  {"num_conta": "Agency number"}<br>
+  {"credito": "value"}<br>
+   The image shows more details:
+<p align="center">
+  <img alt="Credit value" src="https://github.com/Lucas19932020/Itau_Repository/blob/master/Images/Images%20Case%20Itau%20-%20USCS%20Readme/15.%20Credit%20value.PNG" />
+  </p>
+```bash  
+  Debit process  
+  POST     localhost:8080/conta/debito
+```
+  The debit process is similar to the credit process, but instead of credit use debit.
+  <br>
+  <br>
+  {"num_conta": "Agency number"}<br>
+  {"credito": "value"}<br>
+  The image below shows an example of the debit process:
+<p align="center">
+  <img alt="Debit value" src="https://github.com/Lucas19932020/Itau_Repository/blob/master/Images/Images%20Case%20Itau%20-%20USCS%20Readme/16.%20Debit.PNG" />
+  </p>
+  
+  <br><br><br>
+  
+  After the each debiting, crediting, deleting and registering process is sent an event describing the process that passes through Spring, Kafka and finally it is stored at the historico table.
+  <br>
+  The images show all the events that have been made:
+  <br><br>
+  Spring terminal log:
+  <br>
+  <p align="center">
+  <img alt="Spring Terminal" src="https://github.com/Lucas19932020/Itau_Repository/blob/master/Images/Images%20Case%20Itau%20-%20USCS%20Readme/17.%20Spring%20Event%20Log.PNG" />
+  </p>
+  <br><br>
+  Kafka terminal:
+  <br>
+  <p align="center">
+  <img alt="Kafka Teminal" src="https://github.com/Lucas19932020/Itau_Repository/blob/master/Images/Images%20Case%20Itau%20-%20USCS%20Readme/18.%20Kafka%20Event%20Log%20after%20Credit%20and%20Debit.PNG" />
+  </p>
+  <br><br>
+  Table historico:
+  <br>
+    <p align="center">
+  <img alt="Historico Table" src="https://github.com/Lucas19932020/Itau_Repository/blob/master/Images/Images%20Case%20Itau%20-%20USCS%20Readme/19.%20Keyspace%20log%20after%20debit%20and%20credit.PNG" />
+  </p>
+  <br><br>
