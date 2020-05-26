@@ -139,7 +139,7 @@ Execute the class `StartApplication`.
 ## Routing
 
 ```bash  
-  How to Register a Client.
+  Registering a Client.
   POST    http://localhost:8080/clientes/salvar
  ```
   Register the client's informations as the image below:
@@ -154,8 +154,15 @@ Execute the class `StartApplication`.
   <img alt="Registering a client Example" src="https://github.com/Lucas19932020/Itau_Repository/blob/master/Images/Images%20Case%20Itau%20-%20USCS%20Readme/2%20Registering%20a%20new%20client.PNG" width="400" />
   <img alt="Registering a new client" src="https://github.com/Lucas19932020/Itau_Repository/blob/master/Images/Images%20Case%20Itau%20-%20USCS%20Readme/3%20Registering%20a%20client%20Example.PNG" width="400" />
   </p>
+   
+    After registering a new client an event log is sent and is registerd on historico table.
   
+  <p align="center">
+  <img alt="Keyspace log after registering a new client" src="https://github.com/Lucas19932020/Itau_Repository/blob/master/Images/Images%20Case%20Itau%20-%20USCS%20Readme/7.%20Keyspace%20log%20after%20registering%20a%20new%20client.PNG" />
+  </p>
   
 ```bash  
+  Listing all registered client:  
   GET     http://localhost:8080/clientes/lista
 ``` 
+
