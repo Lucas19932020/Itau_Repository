@@ -130,8 +130,8 @@ Site to download [Docker](https://docs.docker.com/get-docker/).
   **4.4. To create a Topic in Kafka, execute the command:**
 
   ```bash
-    docker-compose exec kafka  \
-    kafka-topics --create --topic bank-listener --partitions 3 --replication-factor 1 --if-not-exists --zookeeper zookeeper:2181
+    docker-compose exec kafka  \                                                              
+    kafka-topics --create --topic foo --partitions 1 --replication-factor 1 --if-not-exists --zookeeper zookeeper:2181
   ```
     
   **4.5. To validate that the Topic was created, run the command:**
