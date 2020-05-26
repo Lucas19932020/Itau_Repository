@@ -94,7 +94,7 @@ public class ClienteController {
 
                 clienteRepository.save(clienteVO);
 
-                orderProducer.send(clienteVO, "Cadastro", new Timestamp(System.currentTimeMillis()), 1);
+                orderProducer.send(clienteVO, "Cadastro de cliente", new Timestamp(System.currentTimeMillis()), 1);
 
             } else {
                 return ResponseEntity.status(400).body(new AppException(ErrorCode.CPF_CNPJ_ALREADY_EXISTS));
