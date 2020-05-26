@@ -138,7 +138,7 @@ Site to download [Docker](https://docs.docker.com/get-docker/).
 
   ```bash
   docker-compose exec kafka  \
-      kafka-topics --describe --topic bank-listener  --zookeeper zookeeper:2181
+      kafka-topics --describe --topic foo  --zookeeper zookeeper:2181
   ```
 
 **5. Import the uscsitau project and kafaka projetc into the IDE**
