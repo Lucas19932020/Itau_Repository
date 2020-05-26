@@ -132,12 +132,13 @@ Site to download [Docker](https://docs.docker.com/get-docker/).
       kafka-topics --describe --topic bank-listener  --zookeeper zookeeper:2181
   ```
 
-**5. Import the project into the IDE**
+**5. Import the uscsitau project and kafaka projetc into the IDE**
 
-Execute the class `StartApplication`.
+Execute the classes `StartApplication` and `kafakaApplication`.
 
 ## Routing
-
+  - To perform all of the following processes, you need to download Postman. <br>
+  Download [Postman here](https://www.postman.com/downloads/).
 ```bash  
   Registering a Client.
   POST    http://localhost:8080/clientes/salvar
@@ -204,6 +205,26 @@ The informations that can be updated are the client name, income, adress or comp
 <p align="center">
   <img alt="Deleting a client" src="https://github.com/Lucas19932020/Itau_Repository/blob/master/Images/Images%20Case%20Itau%20-%20USCS%20Readme/11.%20Deleting%20a%20client.PNG" />
   </p>
+  
+```bash  
+  Listing all account numbers  
+  GET     localhost:8080/conta/credito
+```
+The URL above lists all the registered account numbers.
+
+<p align="center">
+  <img alt="Conta_List" src="https://github.com/Lucas19932020/Itau_Repository/blob/master/Images/Images%20Case%20Itau%20-%20USCS%20Readme/22.%20Conta_Lista.PNG" />
+  </p>
+
+```bash  
+  Listing a specific account numbers  
+  GET    localhost:8080/conta/"acount_number"
+```
+  To list a specific registered account numbers, insert the desired account number after "/conta":
+  
+<p align="center">
+  <img alt="Conta_id" src="https://github.com/Lucas19932020/Itau_Repository/blob/master/Images/Images%20Case%20Itau%20-%20USCS%20Readme/23.%20Conta_Id.PNG" />
+  </p>
 
 ```bash  
   Credit process  
@@ -259,3 +280,13 @@ The image below shows an example of the debit process:
   <img alt="Historico Table" src="https://github.com/Lucas19932020/Itau_Repository/blob/master/Images/Images%20Case%20Itau%20-%20USCS%20Readme/19.%20Keyspace%20log%20after%20debit%20and%20credit.PNG" />
   </p>
   <br><br>
+  
+```bash  
+  Credit process  
+  GET     localhost:8080/historico/lista
+```
+  Use the URL above to list all events performed. Example:
+    
+  <p align="center">
+  <img alt="List Table historico" src="https://github.com/Lucas19932020/Itau_Repository/blob/master/Images/Images%20Case%20Itau%20-%20USCS%20Readme/21.%20List%20table%20historico.PNG" />
+  </p>
