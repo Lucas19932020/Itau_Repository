@@ -155,14 +155,30 @@ Execute the class `StartApplication`.
   <img alt="Registering a new client" src="https://github.com/Lucas19932020/Itau_Repository/blob/master/Images/Images%20Case%20Itau%20-%20USCS%20Readme/3%20Registering%20a%20client%20Example.PNG" width="400" />
   </p>
    
-    After registering a new client an event log is sent and is registerd on historico table.
+   After registering a new client an event log is sent and is registerd on historico table.
   
   <p align="center">
   <img alt="Keyspace log after registering a new client" src="https://github.com/Lucas19932020/Itau_Repository/blob/master/Images/Images%20Case%20Itau%20-%20USCS%20Readme/7.%20Keyspace%20log%20after%20registering%20a%20new%20client.PNG" />
   </p>
-  
+
 ```bash  
   Listing all registered client:  
   GET     http://localhost:8080/clientes/lista
 ``` 
+The command above lists all the registered clients:
+See the example bellow: 
+
+<p align="center">
+  <img alt="List of registers" src="https://github.com/Lucas19932020/Itau_Repository/blob/master/Images/Images%20Case%20Itau%20-%20USCS%20Readme/8.%20List%20of%20registers.PNG" />
+  </p>
+  
+```bash  
+  Searching a specific client:  
+  GET     http://localhost:8080/clientes/CPF or CNPJ number
+``` 
+To serach for a specific client it is necesessary to use his or her CNPJ or CPF like the image below:
+
+<p align="center">
+  <img alt="Seraching a client by CPF or CNPJ" src="https://github.com/Lucas19932020/Itau_Repository/blob/master/Images/Images%20Case%20Itau%20-%20USCS%20Readme/9.%20Seraching%20a%20client%20by%20CPF.PNG" />
+  </p>
 
