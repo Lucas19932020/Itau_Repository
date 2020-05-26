@@ -140,13 +140,22 @@ Execute the class `StartApplication`.
 
 ```bash
   How to Register a Client.
-  POST    http://localhost:8080/clientes/salva
-  
+  POST    http://localhost:8080/clientes/salvar
+ 
   Register the client's informations as the image below:
   
   <p align="center">
-  <img alt="CaseItau" src="https://github.com/Lucas19932020/Itau_Repository/blob/master/Images/Ita%C3%BA%20image.PNG" width="400" />
+  <img alt="Post Model Example" src="https://github.com/Lucas19932020/Itau_Repository/blob/master/Images/Images%20Case%20Itau%20-%20USCS%20Readme/1.%20Post%20Model%20Example.PNG" width="400" />
   </p>
   
+  Registration Examples:
+  
+  <p align="center">
+  <img alt="Registering a client Example" src="https://github.com/Lucas19932020/Itau_Repository/blob/master/Images/Images%20Case%20Itau%20-%20USCS%20Readme/2%20Registering%20a%20new%20client.PNG" width="400" />
+  <img alt="Registering a new client" src="https://github.com/Lucas19932020/Itau_Repository/blob/master/Images/Images%20Case%20Itau%20-%20USCS%20Readme/3%20Registering%20a%20client%20Example.PNG" width="400" />
+  </p>
+  
+  
+```bash  
   GET     http://localhost:8080/clientes/lista
-```
+``` 
