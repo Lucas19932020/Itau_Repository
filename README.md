@@ -20,6 +20,9 @@ Used technologies in the project:
   - Kafka
   - Zookeeper
 
+- API Test
+  - Postman
+
 ## Steps to install
 
 **1. Clone the repository**
