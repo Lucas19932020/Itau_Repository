@@ -126,7 +126,7 @@ public class ClienteController {
             clienteRepository.delete(clienteVO);
             contaRepository.delete(contaVO);
 
-            orderProducer.send(clienteVO, "Deleção de cliente", new Timestamp(System.currentTimeMillis()), 1);
+            orderProducer.send(clienteVO, "Cliente deletado", new Timestamp(System.currentTimeMillis()), 1);
 
             return ResponseEntity.status(204).build();
 
