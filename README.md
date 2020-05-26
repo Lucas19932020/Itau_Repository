@@ -22,6 +22,12 @@ Used technologies in the project:
 
 - API Test
   - Postman
+  
+Solution draw file is inside the repository as:  
+
+```
+Desenho da solução.pptx
+```
 
 ## Steps to install
 
