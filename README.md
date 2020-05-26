@@ -138,14 +138,14 @@ Execute the class `StartApplication`.
 
 ## Routing
 
-
+```bash  
   How to Register a Client.
   POST    http://localhost:8080/clientes/salvar
- 
+ ```
   Register the client's informations as the image below:
   
   <p align="center">
-  <img alt="Post Model Example" src="https://github.com/Lucas19932020/Itau_Repository/blob/master/Images/Images%20Case%20Itau%20-%20USCS%20Readme/1.%20Post%20Model%20Example.PNG" width="400" />
+  <img alt="Post Model Example" src="https://github.com/Lucas19932020/Itau_Repository/blob/master/Images/Images%20Case%20Itau%20-%20USCS%20Readme/1.%20Post%20Model%20Example.PNG" width="1000" />
   </p>
   
   Registration Examples:
