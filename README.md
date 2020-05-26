@@ -176,9 +176,34 @@ See the example bellow:
   Searching a specific client:  
   GET     http://localhost:8080/clientes/CPF or CNPJ number
 ``` 
-To serach for a specific client it is necesessary to use his or her CNPJ or CPF like the image below:
+To search for a specific client it is necesessary to use his or her CNPJ or CPF like the image below:
 
 <p align="center">
   <img alt="Seraching a client by CPF or CNPJ" src="https://github.com/Lucas19932020/Itau_Repository/blob/master/Images/Images%20Case%20Itau%20-%20USCS%20Readme/9.%20Seraching%20a%20client%20by%20CPF.PNG" />
+  </p>
+  
+```bash  
+  Updating a register  
+  PUT     localhost:8080/clientes/atualizar
+```  
+It is also possible to update a client register, the image below shows an updating process.
+
+<p align="center">
+  <img alt="Updating a client register.PNG" src="https://github.com/Lucas19932020/Itau_Repository/blob/master/Images/Images%20Case%20Itau%20-%20USCS%20Readme/10.%20Updating%20a%20client%20register.PNG" />
+  </p>
+
+The informations that can be update are the client name, income, adress or company adress, state registration and the company name.
+
+```bash  
+  Delete process  
+  DELETE     localhost:8080/clientes/deletar
+```  
+  The delete process is simple, it is only needed to write the client CPF or CNPJ like this formula:
+  {"cpf_cnpj": "client CPF/CNPJ number}
+  
+  An example of deleting a client register:
+  
+<p align="center">
+  <img alt="Deleting a client" src="https://github.com/Lucas19932020/Itau_Repository/blob/master/Images/Images%20Case%20Itau%20-%20USCS%20Readme/11.%20Deleting%20a%20client.PNG" />
   </p>
 
