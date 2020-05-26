@@ -211,23 +211,26 @@ The informations that can be updated are the client name, income, adress or comp
 ```
   To credit a value, inform the agency number and the value to be credited:
   <br>
-  <br>
-  {"num_conta": "Agency number"}<br>
-  {"credito": "value"}<br>
+```
+  {"num_conta": "Agency number"}
+  {"credito": "value"}
+  ```
    The image shows more details:
 <p align="center">
   <img alt="Credit value" src="https://github.com/Lucas19932020/Itau_Repository/blob/master/Images/Images%20Case%20Itau%20-%20USCS%20Readme/15.%20Credit%20value.PNG" />
   </p>
+  
 ```bash  
   Debit process  
   POST     localhost:8080/conta/debito
 ```
   The debit process is similar to the credit process, but instead of credit use debit.
   <br>
-  <br>
-  {"num_conta": "Agency number"}<br>
-  {"credito": "value"}<br>
-  The image below shows an example of the debit process:
+  ```
+  {"num_conta": "Agency number"}
+  {"debito": "value"}
+```  
+The image below shows an example of the debit process:
 <p align="center">
   <img alt="Debit value" src="https://github.com/Lucas19932020/Itau_Repository/blob/master/Images/Images%20Case%20Itau%20-%20USCS%20Readme/16.%20Debit.PNG" />
   </p>
