@@ -165,7 +165,7 @@ Execute the class `StartApplication`.
   Listing all registered client:  
   GET     http://localhost:8080/clientes/lista
 ``` 
-The command above lists all the registered clients.<\ br>
+The command above lists all the registered clients.<br>
 See the example bellow: 
 
 <p align="center">
@@ -200,7 +200,7 @@ The informations that can be update are the client name, income, adress or compa
 ```  
   The delete process is simple, it is only needed to write the client CPF or CNPJ like this formula:
   {"cpf_cnpj": "client CPF/CNPJ number}
-  <\ br>
+  <br>
   An example of deleting a client register:
   
 <p align="center">
