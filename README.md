@@ -138,7 +138,7 @@ Execute the class `StartApplication`.
 
 ## Routing
 
-```bash
+
   How to Register a Client.
   POST    http://localhost:8080/clientes/salvar
  
