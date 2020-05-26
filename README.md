@@ -139,6 +139,14 @@ Execute the class `StartApplication`.
 ## Routing
 
 ```bash
-  POST    http://localhost:8080/clientes/lista
-  GET     http://localhost:8080/clientes/salvar
+  How to Register a Client.
+  POST    http://localhost:8080/clientes/salva
+  
+  Register the client's informations as the image below:
+  
+  <p align="center">
+  <img alt="CaseItau" src="https://github.com/Lucas19932020/Itau_Repository/blob/master/Images/Ita%C3%BA%20image.PNG" width="400" />
+  </p>
+  
+  GET     http://localhost:8080/clientes/lista
 ```
