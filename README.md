@@ -186,20 +186,18 @@ To search for a specific client it is necesessary to use his or her CNPJ or CPF 
   Updating a register  
   PUT     localhost:8080/clientes/atualizar
 ```  
-It is also possible to update a client register, the image below shows an updating process.
+The informations that can be updated are the client name, income, adress or company adress, state registration and the company name. The image below shows an updating process.
 
 <p align="center">
   <img alt="Updating a client register.PNG" src="https://github.com/Lucas19932020/Itau_Repository/blob/master/Images/Images%20Case%20Itau%20-%20USCS%20Readme/10.%20Updating%20a%20client%20register.PNG" />
   </p>
 
-The informations that can be update are the client name, income, adress or company adress, state registration and the company name.
-
 ```bash  
   Delete process  
   DELETE     localhost:8080/clientes/deletar
 ```  
-  The delete process is simple, it is only needed to write the client CPF or CNPJ like this formula:
-  {"cpf_cnpj": "client CPF/CNPJ number}, after writing press send.
+  The delete process is simple, it is only needed to write the client CPF or CNPJ like this formula:<br>
+  {"cpf_cnpj": "client CPF/CNPJ number}, after writing the desired CPF/CNPJ press send.
   <br>
   An example of deleting a client register:
   
@@ -211,7 +209,7 @@ The informations that can be update are the client name, income, adress or compa
   Credit process  
   POST     localhost:8080/conta/credito
 ```
-  To credit a value is needed to inform the agency number and the value to be credited:
+  To credit a value, inform the agency number and the value to be credited:
   <br>
   <br>
   {"num_conta": "Agency number"}<br>
@@ -236,7 +234,7 @@ The informations that can be update are the client name, income, adress or compa
   
   <br><br><br>
   
-  After the each debiting, crediting, deleting and registering process is sent an event describing the process that passes through Spring, Kafka and finally it is stored at the historico table.
+  After each debiting, crediting, deleting and registering process is sent an event describing the process that passes through Spring, Kafka and finally it is stored at the historico table.
   <br>
   The images show all the events that have been made:
   <br><br>
