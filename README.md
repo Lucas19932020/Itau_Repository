@@ -282,7 +282,7 @@ The image below shows an example of the debit process:
   <br><br>
   
 ```bash  
-  Credit process  
+  Events List 
   GET     localhost:8080/historico/lista
 ```
   Use the URL above to list all events performed. Example:
